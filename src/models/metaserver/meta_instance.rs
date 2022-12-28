@@ -31,6 +31,7 @@ impl MetaInstance {
 #[serde(rename_all = "snake_case")]
 #[ts(export)]
 pub enum ModCategory {
+    None,
     Test,
 }
 
@@ -60,8 +61,7 @@ pub struct MetaMod {
     pub optional: bool,
     pub artifact: Artifact,
     pub recommended: bool,
-    pub category: Option<ModCategory>,
-    #[serde(skip_serializing_if = "HashMap::is_empty")]
+    pub category: ModCategory,
     pub locale: HashMap<LocaleKey, ModLocale>
 }
 
@@ -89,7 +89,7 @@ impl MetaMod {
             optional,
             artifact,
             recommended,
-            category,
+            category: category.unwrap_or(ModCategory::None),
             locale,
         }
     }
