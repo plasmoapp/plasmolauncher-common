@@ -8,7 +8,7 @@ pub struct ModLocale {
     pub description: Option<String>
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, TS)]
+#[derive(Debug, Deserialize, Serialize, Clone, TS, PartialEq, Eq, Hash)]
 #[ts(export)]
 #[serde(rename_all = "lowercase")]
 pub enum LocaleKey {
