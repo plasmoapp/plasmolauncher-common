@@ -3,7 +3,7 @@ use std::{collections::HashMap, path::PathBuf};
 use serde::{Serialize, Deserialize};
 use ts_rs::TS;
 
-use crate::models::{instance::{Instance}, artifact::Artifact};
+use crate::models::{instance::{Instance}, artifact::Artifact, locale::{LocaleKey, ModLocale}};
 
 #[derive(Debug, Deserialize, Serialize, Clone, TS)]
 #[ts(export)]
@@ -60,7 +60,9 @@ pub struct MetaMod {
     pub optional: bool,
     pub artifact: Artifact,
     pub recommended: bool,
-    pub category: Option<ModCategory>
+    pub category: Option<ModCategory>,
+    #[serde(skip_serializing_if = "HashMap::is_empty")]
+    pub locale: HashMap<LocaleKey, ModLocale>
 }
 
 impl MetaMod {
@@ -78,7 +80,8 @@ impl MetaMod {
         optional: bool,
         artifact: Artifact,
         recommended: bool,
-        category: Option<ModCategory>
+        category: Option<ModCategory>,
+        locale: HashMap<LocaleKey, ModLocale>
     ) -> Self {
         Self {
             id: id.into(),
@@ -87,6 +90,7 @@ impl MetaMod {
             artifact,
             recommended,
             category,
+            locale,
         }
     }
 }
